@@ -3,7 +3,7 @@ if exists("g:JavaUnit_key")
     exec 'nnoremap <silent> '.s:JavaUnit_key.' :call TestMethod()<cr>'
 endif
 
-function! TestMethod(args)
+function! TestMethod(...)
     if a:args == ""
         let s:wsdpath = expand("%:r")
         let s:cwords = expand('<cword>')
@@ -14,10 +14,9 @@ function! TestMethod(args)
     endif
 endfunction
 
-command! -nargs=?
-            \JavaUnitTest
-            \call TestMethod(<q-args>)
-
+command! -nargs=*
+            \ JavaUnitTest
+            \ call TestMethod(<q-args>)
 function JavaUnit_GetClassPath()
 
 endf
