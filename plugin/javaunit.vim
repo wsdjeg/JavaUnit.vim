@@ -3,22 +3,33 @@ if exists("g:JavaUnit_key")
     exec 'nnoremap <silent> '.s:JavaUnit_key.' :call TestMethod("")<cr>'
 endif
 
-if exists("g:JavaUnit_ClassPath")
-    let s:JavaUnit_ClassPath = g:JavaUnit_ClassPath
+if exists("g:JavaComplete_LibsPath")
+    let s:JavaUnit_ClassPath = g:JavaComplete_LibsPath
 else
-    "let s:JavaUnit_ClassPath =
+    "call JavaUnit_GetClassPath()
 endif
 
+if exists("g:JavaUnit_tempdir")
+    let s:JavaUnit_tempdir = g:JavaUnit_tempdir
+else
+    let s:JavaUnit_tempdir = '~/.vim/bundle/JavaUnit.vim/temp'
+endif
+let s:JavaUnit_Exec = "Unite -log -wrap output/shellcmd:"
+let s:JavaUnit_TestMethod_Source = " ~/.vim/bundle/JavaUnit.vim/lib/com/wsdjeg/util/TestMethod.java"
+lockvar! s:JavaUnit_Exec s:JavaUnit_TestMethod_Source
+if findfile(s:JavaUnit_tempdir."/com/wsdjeg/util/TestMethod.class")==""
+    silent exec "!javac -d ".s:JavaUnit_tempdir.s:JavaUnit_TestMethod_Source
+endif
 function JaveUnitTestMethod(args,...)
     if a:args == ""
         let s:wsdpath = expand("%:r")
         let s:cwords = expand('<cword>')
-        exec 'Unite -log -wrap output/shellcmd:java\ -cp\ target/classes\ com.wsdjeg.util.TestMethod\ '.s:wsdpath.'\ '.s:cwords
+        let s:cmd='java -cp '.s:JavaUnit_tempdir.':'.s:JavaUnit_ClassPath.' com.wsdjeg.util.TestMethod '.s:wsdpath.' '.s:cwords
+        exec s:JavaUnit_Exec.JavaUnitEscapeCMD(s:cmd)
     else
         let s:wsdpath = expand("%:r")
-        echom a:args
-        let s:argss = substitute(a:args,' ','\\ ','g')
-        exec 'Unite -log -wrap output/shellcmd:java\ -cp\ target/classes\ com.wsdjeg.util.TestMethod\ '.s:wsdpath.'\ '.s:argss
+        let s:cmd='java -cp '.s:JavaUnit_tempdir.':'.s:JavaUnit_ClassPath.' com.wsdjeg.util.TestMethod '.s:wsdpath.' '.a:args
+        exec s:JavaUnit_Exec.JavaUnitEscapeCMD(s:cmd)
     endif
 endfunction
 
@@ -27,13 +38,13 @@ function JavaUnitTestAllMethods()
         exec 'Unite -log -wrap output/shellcmd:java\ -cp\ target/classes\ com.wsdjeg.util.TestMethod\ '.s:wsdpath
 endfunction
 
+function JavaUnitEscapeCMD(cmd)
+    return substitute(a:cmd,' ','\\ ','g')
+endfunction
+
 command! -nargs=*
             \ JavaUnitTest
             \ call JaveUnitTestMethod(<q-args>)
 command! -nargs=0
             \ JavaUnitTestAll
             \ call JavaUnitTestAllMethods()
-function JavaUnit_GetClassPath()
-
-endf
-
