@@ -3,7 +3,7 @@ if exists("g:JavaUnit_key")
     exec 'nnoremap <silent> '.s:JavaUnit_key.' :call TestMethod()<cr>'
 endif
 
-function! TestMethod(a:args)
+function! TestMethod(args)
     if a:args == ""
         let s:wsdpath = expand("%:r")
         let s:cwords = expand('<cword>')
