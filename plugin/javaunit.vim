@@ -1,4 +1,4 @@
-if exists(g:JavaUnit_key)
+if exists("g:JavaUnit_key")
     let s:JavaUnit_key = g:JavaUnit_key
     exec 'nnoremap <silent> '.s:JavaUnit_key.' :call TestMethod()<cr>'
 endif
