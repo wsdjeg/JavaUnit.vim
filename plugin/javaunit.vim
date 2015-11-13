@@ -6,10 +6,10 @@ endif
 if exists("g:JavaUnit_ClassPath")
     let s:JavaUnit_ClassPath = g:JavaUnit_ClassPath
 else
-    "let s:JavaUnit_ClassPath = 
+    "let s:JavaUnit_ClassPath =
 endif
 
-function TestMethod(args,...)
+function JaveUnitTestMethod(args,...)
     if a:args == ""
         let s:wsdpath = expand("%:r")
         let s:cwords = expand('<cword>')
@@ -22,9 +22,17 @@ function TestMethod(args,...)
     endif
 endfunction
 
+function JavaUnitTestAllMethods()
+        let s:wsdpath = expand("%:r")
+        exec 'Unite -log -wrap output/shellcmd:java\ -cp\ target/classes\ com.wsdjeg.util.TestMethod\ '.s:wsdpath
+endfunction
+
 command! -nargs=*
             \ JavaUnitTest
-            \ call TestMethod(<q-args>)
+            \ call JaveUnitTestMethod(<q-args>)
+command! -nargs=0
+            \ JavaUnitTestAll
+            \ call JavaUnitTestAllMethods()
 function JavaUnit_GetClassPath()
 
 endf
