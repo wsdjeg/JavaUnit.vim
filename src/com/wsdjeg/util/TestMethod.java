@@ -17,17 +17,17 @@ public class TestMethod{
             testMethods(args);
         }
     }
-    public static void testAllMethods(String filePath){
+    public static void testAllMethods(String className){
         Class<?> clazz = null;
         try {
-            clazz = Class.forName(getName(filePath));
+            clazz = Class.forName(className);
         } catch(Exception e){
             e.printStackTrace();
         }
         Method[] mds = clazz.getMethods();
         for (int i = 1; i < mds.length; i++) {
             if (mds[i].getName().startsWith("test")) {
-                testSpecifiedMethod(filePath,mds[i].getName());
+                testSpecifiedMethod(className,mds[i].getName());
             }
         }
     }
@@ -36,32 +36,12 @@ public class TestMethod{
             testSpecifiedMethod(args[0],args[i]);
         }
     }
-    public static String getName(String path){
-        String[] bases = path.split("/");
-        String className = "";
-        boolean flag = false;
-        for (int i = 0; i < bases.length;i++ ) {
-            if (flag) {
-                if (i == bases.length-1) {
-                    className=className+bases[i];
-                }else{
-                    className=className+bases[i]+".";
-                }
-            }
-            if (bases[i].equals("java")) {
-                flag=true;
-            }
-        }
-        System.out.println(className);
-        return className;
-    }
     @SuppressWarnings("unchecked")
     public static void testSpecifiedMethod(String className,String methodName){
         try{
-            String str = getName(className);
-            System.out.println("startting : className:" + str + " methodName :"+ methodName + "()" );
+            System.out.println("startting : className:" + className + " methodName :"+ methodName + "()" );
             System.out.println("result:");
-            Class<?> clazz = Class.forName(str);
+            Class<?> clazz = Class.forName(className);
             clazz.getMethod(methodName).invoke(clazz.newInstance());
             System.out.println("success!");
         }catch(Exception e){

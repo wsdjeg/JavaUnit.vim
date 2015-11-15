@@ -5,6 +5,7 @@ requirement
 1. jdk
 2. [artur-shaik/javacomplete2](https://github.com/artur-shaik/vim-javacomplete2)
 3. [scrooloose/syntastic](https://github.com/scrooloose/syntastic)
+4. [Shougo/unite.vim](https://github.com/Shougo/unite.vim)
 
 intall
 

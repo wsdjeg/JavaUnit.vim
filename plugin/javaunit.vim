@@ -1,6 +1,6 @@
 if exists("g:JavaUnit_key")
     let s:JavaUnit_key = g:JavaUnit_key
-    exec 'nnoremap <silent> '.s:JavaUnit_key.' :call JaveUnitTestMethod(" ")<cr>'
+    exec 'nnoremap <silent> '.s:JavaUnit_key.' :call JaveUnitTestMethod("")<cr>'
 endif
 
 if exists("g:JavaUnit_ClassPath")
@@ -21,21 +21,23 @@ if findfile(s:JavaUnit_tempdir."/com/wsdjeg/util/TestMethod.class")==""
     silent exec "!javac -d ".s:JavaUnit_tempdir.s:JavaUnit_TestMethod_Source
 endif
 function JaveUnitTestMethod(args,...)
+    let s:line = getline(search("package","nb",getline("0$")))
+    let s:currentClassName = split(split(s:line," ")[1],";")[0].".".expand("%:t:r")
     if a:args == ""
-        let s:wsdpath = expand("%:r")
         let s:cwords = expand('<cword>')
-        let s:cmd='java -cp '.s:JavaUnit_tempdir.':'.g:JavaComplete_LibsPath.' com.wsdjeg.util.TestMethod '.s:wsdpath.' '.s:cwords
+        let s:cmd='java -cp '.s:JavaUnit_tempdir.':'.g:JavaComplete_LibsPath.' com.wsdjeg.util.TestMethod '.s:currentClassName.' '.s:cwords
         exec s:JavaUnit_Exec.JavaUnitEscapeCMD(s:cmd)
     else
-        let s:wsdpath = expand("%:r")
-        let s:cmd='java -cp '.s:JavaUnit_tempdir.':'.g:JavaComplete_LibsPath.' com.wsdjeg.util.TestMethod '.s:wsdpath.' '.a:args
+        let s:cmd='java -cp '.s:JavaUnit_tempdir.':'.g:JavaComplete_LibsPath.' com.wsdjeg.util.TestMethod '.s:currentClassName.' '.a:args
         exec s:JavaUnit_Exec.JavaUnitEscapeCMD(s:cmd)
     endif
 endfunction
 
 function JavaUnitTestAllMethods()
-        let s:wsdpath = expand("%:r")
-        exec 'Unite -log -wrap output/shellcmd:java\ -cp\ target/classes\ com.wsdjeg.util.TestMethod\ '.s:wsdpath
+    let s:line = getline(search("package","nb",getline("0$")))
+    let s:currentClassName = split(split(s:line," ")[1],";")[0].".".expand("%:t:r")
+    let s:cmd='java -cp '.s:JavaUnit_tempdir.':'.g:JavaComplete_LibsPath.' com.wsdjeg.util.TestMethod '.s:currentClassName
+    exec s:JavaUnit_Exec.JavaUnitEscapeCMD(s:cmd)
 endfunction
 
 function JavaUnitEscapeCMD(cmd)
