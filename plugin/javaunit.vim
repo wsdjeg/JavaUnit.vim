@@ -73,26 +73,26 @@ function JaveUnitTestMethod(args,...)
     endif
 endfunction
 
-function s:JavaUnitTestAllMethods()
+function JavaUnitTestAllMethods()
     let line = getline(search("package","nb",getline("0$")))
     let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
     let cmd='java -cp '.s:JavaUnit_tempdir.':'.g:JavaComplete_LibsPath.' com.wsdjeg.util.TestMethod '.currentClassName
     exec s:JavaUnit_Exec.JavaUnitEscapeCMD(cmd)
 endfunction
 
-function s:JavaUnitEscapeCMD(cmd)
+function JavaUnitEscapeCMD(cmd)
     let s:cmd = substitute(a:cmd,' ','\\ ','g')
     return substitute(s:cmd,':','\\:','g')
 endfunction
 
-function s:JavaUnitMavenTest()
+function JavaUnitMavenTest()
     let line = getline(search("package","nb",getline("0$")))
     let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
     let cmd = 'mvn test -Dtest='.currentClassName.'|ag --nocolor "^[^[]"'
     exec s:JavaUnit_Exec.JavaUnitEscapeCMD(cmd)
 endfunction
 
-function s:JavaUnitMavenTestAll()
+function JavaUnitMavenTestAll()
     exec s:JavaUnit_Exec.JavaUnitEscapeCMD('mvn test|ag --nocolor "^[^[]"')
 endfunction
 
