@@ -1,6 +1,6 @@
-if !exists("g:JavaUnit_autoloaded")
+if exists("g:JavaUnit_autoloaded")&&g:JavaUnit_autoloaded==1
+else
     let g:JavaUnit_autoloaded=1
-    finish
 endif
-function JavaUnit_GetClassPath()
+function javaunit#JavaUnit_GetClassPath()
 endfunction
