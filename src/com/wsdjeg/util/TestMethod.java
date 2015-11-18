@@ -25,7 +25,7 @@ public class TestMethod{
             e.printStackTrace();
         }
         Method[] mds = clazz.getMethods();
-        for (int i = 1; i < mds.length; i++) {
+        for (int i = 0; i < mds.length; i++) {
             if (mds[i].getName().startsWith("test")) {
                 testSpecifiedMethod(className,mds[i].getName());
             }
