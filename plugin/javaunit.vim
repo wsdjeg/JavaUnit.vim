@@ -96,6 +96,37 @@ function JavaUnitMavenTestAll()
     exec s:JavaUnit_Exec.JavaUnitEscapeCMD('mvn test|ag --nocolor "^[^[]"')
 endfunction
 
+function JavaUnitNewClass(classNAME)
+    let filePath = expand("%:h")
+    let flag = 0
+    let packageName = ''
+    for a in split(filePath,"/")
+        if flag
+            if a == expand("%:h:t")
+                let packageName .= a.';'
+            else
+                let packageName .= a.'.'
+            endif
+        endif
+        if a == "java"
+            let flag = 1
+        endif
+    endfor
+    call append(0,"package ".packageName)
+    call append(1,"import org.junit.Test;")
+    call append(2,"import org.junit.Assert;")
+    call append(3,"public class ".a:classNAME." {")
+    call append(4,"@Test")
+    call append(5,"public void testM() {")
+    call append(6,"//TODO")
+    call append(7,"}")
+    call append(8,"}")
+    call feedkeys("gg=G","n")
+    call feedkeys("/testM\<cr>","n")
+    call feedkeys("viw","n")
+    "call feedkeys("/TODO\<cr>","n")
+endfunction
+
 command! -nargs=*
             \ JavaUnitTest
             \ call JaveUnitTestMethod(<q-args>)
@@ -108,3 +139,6 @@ command! -nargs=0
 command! -nargs=0
             \ JavaUnitMavenTestAll
             \ call JavaUnitMavenTestAll()
+command! -nargs=? -complete=file
+            \ JavaUnitNewClass
+            \ call JavaUnitNewClass(expand("%:t:r"))
