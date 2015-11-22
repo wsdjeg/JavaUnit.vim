@@ -9,16 +9,16 @@ else
     call javaunit#JavaUnit_GetClassPath()
 endif
 
-if exists("g:JavaUnit_tempdir")
-    let s:JavaUnit_tempdir = g:JavaUnit_tempdir
+if exists("g:JavaUnit_custom_tempdir")
+    let g:JavaUnit_tempdir = g:JavaUnit_custom_tempdir
 else
-    let s:JavaUnit_tempdir = '~/.vim/bundle/JavaUnit.vim/bin'
+    let g:JavaUnit_tempdir = '~/.vim/bundle/JavaUnit.vim/bin'
 endif
 let s:JavaUnit_Exec = "Unite -log -wrap output/shellcmd:"
 let s:JavaUnit_TestMethod_Source = " ~/.vim/bundle/JavaUnit.vim/src/com/wsdjeg/util/TestMethod.java"
-lockvar! s:JavaUnit_Exec s:JavaUnit_TestMethod_Source
-if findfile(s:JavaUnit_tempdir."/com/wsdjeg/util/TestMethod.class")==""
-    silent exec "!javac -d ".s:JavaUnit_tempdir.s:JavaUnit_TestMethod_Source
+lockvar! s:JavaUnit_Exec s:JavaUnit_TestMethod_Source g:JavaUnit_tempdir
+if findfile(g:JavaUnit_tempdir."/com/wsdjeg/util/TestMethod.class")==""
+    silent exec "!javac -d ".g:JavaUnit_tempdir.s:JavaUnit_TestMethod_Source
 endif
 function JaveUnitTestMethod(args,...)
     let line = getline(search("package","nb",getline("0$")))
@@ -27,7 +27,7 @@ function JaveUnitTestMethod(args,...)
         let cwords = expand('<cword>')
         if filereadable('pom.xml')
             let cmd='java -cp '
-                        \.s:JavaUnit_tempdir
+                        \.g:JavaUnit_tempdir
                         \.':'
                         \.getcwd()
                         \.'/target/test-classes:'
@@ -38,7 +38,7 @@ function JaveUnitTestMethod(args,...)
                         \.cwords
         else
             let cmd='java -cp '
-                        \.s:JavaUnit_tempdir
+                        \.g:JavaUnit_tempdir
                         \.':'
                         \.g:JavaComplete_LibsPath
                         \.' com.wsdjeg.util.TestMethod '
@@ -50,7 +50,7 @@ function JaveUnitTestMethod(args,...)
     else
         if filereadable('pom.xml')
             let cmd='java -cp '
-                        \.s:JavaUnit_tempdir
+                        \.g:JavaUnit_tempdir
                         \.':'
                         \.getcwd()
                         \.'/target/test-classes:'
@@ -61,7 +61,7 @@ function JaveUnitTestMethod(args,...)
                         \.a:args
         else
             let cmd='java -cp '
-                        \.s:JavaUnit_tempdir
+                        \.g:JavaUnit_tempdir
                         \.':'
                         \.g:JavaComplete_LibsPath
                         \.' com.wsdjeg.util.TestMethod '
@@ -76,7 +76,7 @@ endfunction
 function JavaUnitTestAllMethods()
     let line = getline(search("package","nb",getline("0$")))
     let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
-    let cmd='java -cp '.s:JavaUnit_tempdir.':'.g:JavaComplete_LibsPath.' com.wsdjeg.util.TestMethod '.currentClassName
+    let cmd='java -cp '.g:JavaUnit_tempdir.':'.g:JavaComplete_LibsPath.' com.wsdjeg.util.TestMethod '.currentClassName
     exec s:JavaUnit_Exec.JavaUnitEscapeCMD(cmd)
 endfunction
 
@@ -142,3 +142,9 @@ command! -nargs=0
 command! -nargs=? -complete=file
             \ JavaUnitNewClass
             \ call JavaUnitNewClass(expand("%:t:r"))
+command! -nargs=*
+            \ JavaUnitGetConnection
+            \ call javaunit#JavaUnit_GetConnection(<q-args>)
+command! -nargs=*
+            \ JavaUnitSQLUse
+            \ call javaunit#JavaUnit_SQL_Use(<q-args>)
