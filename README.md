@@ -23,6 +23,12 @@ Plugin 'wsdjeg/JavaUnit.vim'
 
 - command
 
+`JavaUnitGetConnection userName password` just like `mysql -u userName -p password`
+
+`JavaUnitSQLUse databaseName` just like `use databaseName`
+
+`JavaUnitSQLDrop database databasaName`or`JavaUnitSQLDrop table tableName` delete database or table
+
 JavaUnitTest
 
 test the method on the cursor
