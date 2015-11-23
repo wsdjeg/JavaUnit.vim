@@ -116,7 +116,34 @@ function! s:JavaUnit_SQL_drop_database(...)
     endif
 endf
 function! s:JavaUnit_SQL_drop_table(...)
-    echo 'try to delete table :'.a:1
+    if get(g:,'JavaUnit_SQL_DatabaseName','')!=''
+        let input1 = input('try to delete '.a:1.' (Y/N)? ')
+        echon "\r\r"
+        echon ''
+        if input1 == 'Y'||input1 =='y'
+            let cmd = 'java -cp '
+                        \.g:JavaUnit_SQL_Driver
+                        \.':'
+                        \.g:JavaUnit_tempdir
+                        \.' com.wsdjeg.util.VimSqlUtils droptable '
+                        \.g:JavaUnit_SQL_DatabaseName
+                        \.' '
+                        \.a:1
+                        \.' '
+                        \.s:username
+                        \.' '
+                        \.s:password
+            if split(system(cmd),'\n')[0]=='true'
+                echo 'delete success ! '
+            else
+                echo 'no such table!'
+            endif
+        else
+            echo 'byby!'
+        endif
+    else
+        echo 'please select a database!'
+    endif
 endf
 function! javaunit#JavaUnit_SQL_drop(...)
     if get(g:,'JavaUnit_SQL_connected','false')=='true'
