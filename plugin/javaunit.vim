@@ -1,3 +1,10 @@
+"init
+if findfile('/home/wsdjeg/.m2/repository/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar')!=''
+    let g:JavaUnit_SQL_Driver = '/home/wsdjeg/.m2/repository/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar'
+else
+    let g:JavaUnit_SQL_Driver = ''
+endif
+
 if exists("g:JavaUnit_key")
     let s:JavaUnit_key = g:JavaUnit_key
     exec 'nnoremap <silent> '.s:JavaUnit_key.' :call JaveUnitTestMethod("")<cr>'
@@ -6,12 +13,7 @@ endif
 if exists("g:JavaUnit_ClassPath")
     let s:JavaUnit_ClassPath = g:JavaUnit_ClassPath
 else
-    call javaunit#JavaUnit_GetClassPath()
-endif
-if findfile('/home/wsdjeg/.m2/repository/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar')!=''
-    let g:JavaUnit_SQL_Driver = '/home/wsdjeg/.m2/repository/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar'
-else
-    let g:JavaUnit_SQL_Driver = ''
+    "call javaunit#JavaUnit_GetClassPath()
 endif
 
 
@@ -23,9 +25,11 @@ endif
 let s:JavaUnit_Exec = "Unite -log -wrap output/shellcmd:"
 let s:JavaUnit_TestMethod_Source = " ~/.vim/bundle/JavaUnit.vim/src/com/wsdjeg/util/*.java"
 lockvar! s:JavaUnit_Exec s:JavaUnit_TestMethod_Source g:JavaUnit_tempdir
+
 if findfile(g:JavaUnit_tempdir."/com/wsdjeg/util/TestMethod.class")==""
     silent exec "!javac -d ".g:JavaUnit_tempdir.s:JavaUnit_TestMethod_Source
 endif
+
 function JaveUnitTestMethod(args,...)
     let line = getline(search("package","nb",getline("0$")))
     let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
@@ -151,9 +155,15 @@ command! -nargs=? -complete=file
 command! -nargs=*
             \ JavaUnitGetConnection
             \ call javaunit#JavaUnit_GetConnection(<q-args>)
+command! -nargs=0
+            \ JavaUnitCloseConnection
+            \ call javaunit#JavaUnit_CloseConnection()
 command! -nargs=*
             \ JavaUnitSQLUse
             \ call javaunit#JavaUnit_SQL_Use(<q-args>)
 command! -nargs=*
             \ JavaUnitSQLDrop
             \ call javaunit#JavaUnit_SQL_drop(<q-args>)
+command! -nargs=*
+            \ JavaUnitSQLInsert
+            \ call javaunit#JavaUnit_SQL_Insert(<q-args>)

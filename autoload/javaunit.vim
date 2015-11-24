@@ -3,37 +3,42 @@ else
     let g:JavaUnit_autoloaded=1
 endif
 
+let s:BaseCMD = 'java -cp '
+            \.g:JavaUnit_SQL_Driver
+            \.':'
+            \.g:JavaUnit_tempdir
+            \.' com.wsdjeg.util.VimSqlUtils '
+
 function javaunit#JavaUnit_GetClassPath()
 endfunction
 
 function! javaunit#JavaUnit_GetConnection(...)
-    let s:username = split(a:000[0],' ')[0]
-    let s:password = split(a:000[0],' ')[1]
+    let s:userinfo = split(a:000[0],' ')[0].' '.split(a:000[0],' ')[1]
     if get(g:,'JavaUnit_SQL_Driver','')!=''
-        let cmd = 'java -cp '
-                    \.g:JavaUnit_SQL_Driver
-                    \.':'
-                    \.g:JavaUnit_tempdir
-                    \.' com.wsdjeg.util.VimSqlUtils getconnection '
-                    \.s:username
+        let cmd = s:BaseCMD
+                    \.'getconnection'
                     \.' '
-                    \.s:password
+                    \.s:userinfo
     else
         let cmd = ''
     endif
     if cmd != ''
         if split(system(cmd),'\n')[0]=='true'
             let g:JavaUnit_SQL_connected = 'true'
-            echo g:JavaUnit_SQL_connected
+            echo 'Successfully connect to the database!'
         else
             let g:JavaUnit_SQL_connected = 'false'
-            echo g:JavaUnit_SQL_connected
+            echo 'connected failed!'
         endif
     endif
 endfunction
 
+fu! javaunit#JavaUnit_CloseConnection()
+    call s:closeconnection()
+endfunction
+
 function! javaunit#JavaUnit_SQL_Use(...)
-    if get(g:,'JavaUnit_SQL_connected','false')=='true'
+    if s:hasSQLConnection()
         if a:1 == ''
             let s = input("please insert a databaseName?")
             echon "\r\r"
@@ -49,9 +54,7 @@ function! javaunit#JavaUnit_SQL_Use(...)
                         \.' com.wsdjeg.util.VimSqlUtils usedatabase '
                         \.s
                         \.' '
-                        \.s:username
-                        \.' '
-                        \.s:password
+                        \.s:userinfo
         else
             let cmd = ''
         endif
@@ -71,9 +74,7 @@ function! javaunit#JavaUnit_SQL_Use(...)
                                 \.' com.wsdjeg.util.VimSqlUtils createdatabase '
                                 \.s
                                 \.' '
-                                \.s:username
-                                \.' '
-                                \.s:password
+                                \.s:userinfo
                     if split(system(cmd),'\n')[0]=='true'
                         echo 'create success,change to '.s
                         let g:JavaUnit_SQL_DatabaseName = s
@@ -85,8 +86,6 @@ function! javaunit#JavaUnit_SQL_Use(...)
                 endif
             endif
         endif
-    else
-        echo 'no connection!'
     endif
 endfunction
 
@@ -102,9 +101,7 @@ function! s:JavaUnit_SQL_drop_database(...)
                     \.' com.wsdjeg.util.VimSqlUtils dropdatabase '
                     \.a:1
                     \.' '
-                    \.s:username
-                    \.' '
-                    \.s:password
+                    \.s:userinfo
         if split(system(cmd),'\n')[0]=='true'
             echo 'delete success ! '
             let g:JavaUnit_SQL_DatabaseName = ''
@@ -116,7 +113,7 @@ function! s:JavaUnit_SQL_drop_database(...)
     endif
 endf
 function! s:JavaUnit_SQL_drop_table(...)
-    if get(g:,'JavaUnit_SQL_DatabaseName','')!=''
+    if s:hasDatabaseName()
         let input1 = input('try to delete '.a:1.' (Y/N)? ')
         echon "\r\r"
         echon ''
@@ -130,9 +127,7 @@ function! s:JavaUnit_SQL_drop_table(...)
                         \.' '
                         \.a:1
                         \.' '
-                        \.s:username
-                        \.' '
-                        \.s:password
+                        \.s:userinfo
             if split(system(cmd),'\n')[0]=='true'
                 echo 'delete success ! '
             else
@@ -141,12 +136,11 @@ function! s:JavaUnit_SQL_drop_table(...)
         else
             echo 'byby!'
         endif
-    else
-        echo 'please select a database!'
     endif
 endf
+
 function! javaunit#JavaUnit_SQL_drop(...)
-    if get(g:,'JavaUnit_SQL_connected','false')=='true'
+    if s:hasSQLConnection()
         if split(a:000[0],' ')[0]=='database'
             call s:JavaUnit_SQL_drop_database(split(a:000[0],' ')[1])
         elseif split(a:000[0],' ')[0]=='table'
@@ -154,7 +148,52 @@ function! javaunit#JavaUnit_SQL_drop(...)
         else
             echo 'wrong input!'
         endif
-    else
-        echo 'no connection!'
     endif
 endfunction
+
+function! javaunit#JavaUnit_SQL_Insert(...)
+    if s:hasSQLConnection()&&s:hasDatabaseName()
+        let cmd = 'java -cp '
+                    \.g:JavaUnit_SQL_Driver
+                    \.':'
+                    \.g:JavaUnit_tempdir
+                    \.' com.wsdjeg.util.VimSqlUtils insert '
+                    \.g:JavaUnit_SQL_DatabaseName
+        for a in a:000
+            let cmd .= ' '.a
+        endfor
+        "TODO
+    endif
+endfunction
+
+function! s:hasDatabaseName()
+    if get(g:,'JavaUnit_SQL_DatabaseName','')!=''
+        return 1
+    else
+        echo 'please select a database!'
+        return 0
+    endif
+endf
+
+function! s:hasSQLConnection()
+    if get(g:,'JavaUnit_SQL_connected','false')=='true'
+        return 1
+    else
+        echo 'no connection!'
+        return 0
+    endif
+endf
+
+fu! s:closeconnection()
+    if s:hasSQLConnection()
+        call s:JavaUnit_unlet('g:JavaUnit_SQL_DatabaseName','g:JavaUnit_SQL_connected','s:userinfo')
+    endif
+endf
+fu! s:JavaUnit_unlet(...)
+    for a in a:000
+        if exists(a)
+            exec 'unlet '.a
+        endif
+    endfor
+    echo 'connection has been closed!'
+endf

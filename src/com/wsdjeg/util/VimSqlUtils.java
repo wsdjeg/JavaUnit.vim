@@ -24,6 +24,8 @@ public class VimSqlUtils {
                 System.out.println(dropDatabase(args[1],args[2],args[3]));
             }else if(args[0].equals("droptable")&&args.length==5){
                 System.out.println(droptable(args[1],args[2],args[3],args[4]));
+            }else if(args[0].equals("insert")&&args.length > 5&&args.length%2==1){
+
             }else{
             }
         } catch(Exception e){
