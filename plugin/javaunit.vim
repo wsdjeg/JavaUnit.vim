@@ -1,17 +1,10 @@
-if exists("g:JavaUnit_ClassPath")
-    let s:JavaUnit_ClassPath = g:JavaUnit_ClassPath
-else
-    "call javaunit#JavaUnit_GetClassPath()
-endif
-
-
 if exists("g:JavaUnit_custom_tempdir")
     let g:JavaUnit_tempdir = g:JavaUnit_custom_tempdir
 else
     let g:JavaUnit_tempdir = $HOME.'/.vim/bundle/JavaUnit.vim/bin'
 endif
 let s:JavaUnit_Exec = "Unite -log -wrap output/shellcmd:"
-let s:JavaUnit_TestMethod_Source = " ~/.vim/bundle/JavaUnit.vim/src/com/wsdjeg/util/*.java"
+let s:JavaUnit_TestMethod_Source = " ~/.vim/bundle/JavaUnit.vim/src/com/wsdjeg/util/TestMethod.java"
 lockvar! s:JavaUnit_Exec s:JavaUnit_TestMethod_Source g:JavaUnit_tempdir
 
 if findfile(g:JavaUnit_tempdir."/com/wsdjeg/util/TestMethod.class")==""
