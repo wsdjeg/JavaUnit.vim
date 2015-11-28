@@ -2,6 +2,7 @@ package com.wsdjeg.mysqlvim;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class SQLUtils {
     public static void getConnection(String username,String password)throws ClassNotFoundException,SQLException {
