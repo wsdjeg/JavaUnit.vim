@@ -1,4 +1,0 @@
-{
-  "src/main/java/*.java": {"alternate": "src/test/java/{dirname}/Test{basename}.java"},
-  "src/test/java/**/Test*.java": {"alternate": "src/main/java/{}.java"}
-}
