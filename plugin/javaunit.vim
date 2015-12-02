@@ -125,11 +125,11 @@ command! -nargs=0
             \ JavaUnitTestAll
             \ call JavaUnitTestAllMethods()
 command! -nargs=0
-            \ JavaUnitMavenTest
+            \ JavaUnitTestMaven
             \ call JavaUnitMavenTest()
 command! -nargs=0
-            \ JavaUnitMavenTestAll
+            \ JavaUnitTestMavenAll
             \ call JavaUnitMavenTestAll()
 command! -nargs=? -complete=file
-            \ JavaUnitNewClass
+            \ JavaUnitTestNewClass
             \ call JavaUnitNewClass(expand("%:t:r"))
