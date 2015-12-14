@@ -1,3 +1,11 @@
+let s:save_cpo = &cpo
+set cpo&vim
+let g:JavaUnit_loaded = get(g:,'JavaUnit_loaded',0)
+if !g:JavaUnit_loaded
+    let g:JavaUnit_loaded = 1
+else
+    finish
+endif
 if exists("g:JavaUnit_custom_tempdir")
     let g:JavaUnit_tempdir = g:JavaUnit_custom_tempdir
 else
@@ -133,3 +141,6 @@ command! -nargs=0
 command! -nargs=? -complete=file
             \ JavaUnitTestNewClass
             \ call JavaUnitNewClass(expand("%:t:r"))
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
