@@ -1,22 +1,24 @@
 let s:save_cpo = &cpo
 set cpo&vim
-let g:JavaUnit_loaded = get(g:,'JavaUnit_loaded',0)
-if !g:JavaUnit_loaded
-    let g:JavaUnit_loaded = 1
-else
+
+if exists('g:JavaUnit_loaded')
     finish
 endif
+let g:JavaUnit_loaded = 1
+
+let s:sep = javaunit#util#sep()
+
 if exists("g:JavaUnit_custom_tempdir")
     let g:JavaUnit_tempdir = g:JavaUnit_custom_tempdir
 else
-    let g:JavaUnit_tempdir = $HOME.'/.vim/bundle/JavaUnit.vim/bin'
+    let g:JavaUnit_tempdir = $HOME. join(['','.vim','bundle','JavaUnit.vim','bin'],s:sep)
 endif
 let s:JavaUnit_Exec = "Unite -log -wrap output/shellcmd:"
-let s:JavaUnit_TestMethod_Source = " ~/.vim/bundle/JavaUnit.vim/src/com/wsdjeg/util/TestMethod.java"
+let s:JavaUnit_TestMethod_Source = join(['~','.vim','bundle','JavaUnit.vim','src','com','wsdjeg','util','TestMethod.java'],s:sep)
 lockvar! s:JavaUnit_Exec s:JavaUnit_TestMethod_Source g:JavaUnit_tempdir
 
-if findfile(g:JavaUnit_tempdir."/com/wsdjeg/util/TestMethod.class")==""
-    silent exec "!javac -d ".g:JavaUnit_tempdir.s:JavaUnit_TestMethod_Source
+if findfile(g:JavaUnit_tempdir.join(['','com','wsdjeg','util','TestMethod.class'],s:sep))==""
+    silent exec "!javac -d ".g:JavaUnit_tempdir.' '.s:JavaUnit_TestMethod_Source
 endif
 
 function JaveUnitTestMethod(args,...)
@@ -29,7 +31,7 @@ function JaveUnitTestMethod(args,...)
                         \.g:JavaUnit_tempdir
                         \.':'
                         \.getcwd()
-                        \.'/target/test-classes:'
+                        \.join(['','target','test-classes:'],s:sep)
                         \.g:JavaComplete_LibsPath
                         \.' com.wsdjeg.util.TestMethod '
                         \.currentClassName
@@ -52,7 +54,7 @@ function JaveUnitTestMethod(args,...)
                         \.g:JavaUnit_tempdir
                         \.':'
                         \.getcwd()
-                        \.'/target/test-classes:'
+                        \.join(['','target','test-classes:'],s:sep)
                         \.g:JavaComplete_LibsPath
                         \.' com.wsdjeg.util.TestMethod '
                         \.currentClassName
@@ -99,7 +101,7 @@ function JavaUnitNewClass(classNAME)
     let filePath = expand("%:h")
     let flag = 0
     let packageName = ''
-    for a in split(filePath,"/")
+    for a in split(filePath,s:sep)
         if flag
             if a == expand("%:h:t")
                 let packageName .= a.';'

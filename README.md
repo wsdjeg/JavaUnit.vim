@@ -9,13 +9,13 @@ requirement
 
 install
 
-- Neobundle
+- [neobundle.vim](https://github.com/Shougo/neobundle.vim)
 
 ```vim
-Neobundle 'wsdjeg/JavaUnit.vim'
+NeoBundle 'wsdjeg/JavaUnit.vim'
 ```
 
-Vundle.vim
+- [Vundle.vim](https://github.com/VundleVim/Vundle.vim)
 
 ```vim
 Plugin 'wsdjeg/JavaUnit.vim'
