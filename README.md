@@ -7,9 +7,9 @@ requirement
 3. [scrooloose/syntastic](https://github.com/scrooloose/syntastic)
 4. [Shougo/unite.vim](https://github.com/Shougo/unite.vim)
 
-intall
+install
 
-- Neobulde
+- Neobundle
 
 ```vim
 Neobundle 'wsdjeg/JavaUnit.vim'
