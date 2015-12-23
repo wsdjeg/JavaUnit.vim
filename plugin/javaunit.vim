@@ -23,7 +23,11 @@ endif
 
 function JaveUnitTestMethod(args,...)
     let line = getline(search("package","nb",getline("0$")))
-    let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
+    if line != ''
+        let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
+    else
+        let currentClassName = expand("%:t:r")
+    endif
     if a:args == ""
         let cwords = expand('<cword>')
         if filereadable('pom.xml')
