@@ -8,13 +8,18 @@ let g:JavaUnit_loaded = 1
 
 let s:sep = javaunit#util#sep()
 
+let g:JavaUnit_Home = fnamemodify(expand('<sfile>'), ':p:h:h:gs?\\?'. s:sep. '?')
+
 if exists("g:JavaUnit_custom_tempdir")
     let g:JavaUnit_tempdir = g:JavaUnit_custom_tempdir
 else
-    let g:JavaUnit_tempdir = $HOME. join(['','.vim','bundle','JavaUnit.vim','bin'],s:sep)
+    let g:JavaUnit_tempdir = g:JavaUnit_Home .s:sep .'bin'
 endif
+
 let s:JavaUnit_Exec = "Unite -log -wrap output/shellcmd:"
-let s:JavaUnit_TestMethod_Source = join(['~','.vim','bundle','JavaUnit.vim','src','com','wsdjeg','util','TestMethod.java'],s:sep)
+
+let s:JavaUnit_TestMethod_Source = g:JavaUnit_Home .s:sep .join(['src','com','wsdjeg','util','TestMethod.java'],s:sep)
+
 lockvar! s:JavaUnit_Exec s:JavaUnit_TestMethod_Source g:JavaUnit_tempdir
 
 if findfile(g:JavaUnit_tempdir.join(['','com','wsdjeg','util','TestMethod.class'],s:sep))==""
