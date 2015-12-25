@@ -15,11 +15,19 @@ function! s:WINDOWS()
     return (has('win16') || has('win32') || has('win64'))
 endfunction
 
-function! javaunit#util#sep() abort
+function! javaunit#util#Fsep() abort
     if s:WINDOWS()
         return '\'
     else
         return '/'
+    endif
+endfunction
+
+function! javaunit#util#Psep() abort
+    if s:WINDOWS()
+        return ';'
+    else
+        return ':'
     endif
 endfunction
 

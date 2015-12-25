@@ -6,24 +6,26 @@ if exists('g:JavaUnit_loaded')
 endif
 let g:JavaUnit_loaded = 1
 
-let s:sep = javaunit#util#sep()
+let s:Fsep = javaunit#util#Fsep()
 
-let g:JavaUnit_Home = fnamemodify(expand('<sfile>'), ':p:h:h:gs?\\?'. s:sep. '?')
+let s:Psep = javaunit#util#Psep()
+
+let g:JavaUnit_Home = fnamemodify(expand('<sfile>'), ':p:h:h:gs?\\?'. s:Fsep. '?')
 
 if exists("g:JavaUnit_custom_tempdir")
     let g:JavaUnit_tempdir = g:JavaUnit_custom_tempdir
 else
-    let g:JavaUnit_tempdir = g:JavaUnit_Home .s:sep .'bin'
+    let g:JavaUnit_tempdir = g:JavaUnit_Home .s:Fsep .'bin'
 endif
 
 let s:JavaUnit_Exec = "Unite -log -wrap output/shellcmd:"
 
-let s:JavaUnit_TestMethod_Source = g:JavaUnit_Home .s:sep .join(['src','com','wsdjeg','util','TestMethod.java'],s:sep)
+let s:JavaUnit_TestMethod_Source = g:JavaUnit_Home .s:Fsep .join(['src','com','wsdjeg','util','TestMethod.java'],s:Fsep)
 
 lockvar! s:JavaUnit_Exec s:JavaUnit_TestMethod_Source g:JavaUnit_tempdir
 
-if findfile(g:JavaUnit_tempdir.join(['','com','wsdjeg','util','TestMethod.class'],s:sep))==""
-    silent exec "!javac -d ".g:JavaUnit_tempdir.' '.s:JavaUnit_TestMethod_Source
+if findfile(g:JavaUnit_tempdir.join(['','com','wsdjeg','util','TestMethod.class'],s:Fsep))==""
+    silent exec '!javac -d "'.g:JavaUnit_tempdir.'" "'.s:JavaUnit_TestMethod_Source .'"'
 endif
 
 function JaveUnitTestMethod(args,...)
@@ -36,22 +38,23 @@ function JaveUnitTestMethod(args,...)
     if a:args == ""
         let cwords = expand('<cword>')
         if filereadable('pom.xml')
-            let cmd='java -cp '
+            let cmd='java -cp "'
                         \.g:JavaUnit_tempdir
-                        \.':'
+                        \.s:Psep
                         \.getcwd()
-                        \.join(['','target','test-classes:'],s:sep)
+                        \.join(['','target','test-classes'],s:Fsep)
+                        \.s:Psep
                         \.g:JavaComplete_LibsPath
-                        \.' com.wsdjeg.util.TestMethod '
+                        \.'" com.wsdjeg.util.TestMethod '
                         \.currentClassName
                         \.' '
                         \.cwords
         else
-            let cmd='java -cp '
+            let cmd='java -cp "'
                         \.g:JavaUnit_tempdir
-                        \.':'
+                        \.s:Psep
                         \.g:JavaComplete_LibsPath
-                        \.' com.wsdjeg.util.TestMethod '
+                        \.'" com.wsdjeg.util.TestMethod '
                         \.currentClassName
                         \.' '
                         \.cwords
@@ -59,22 +62,23 @@ function JaveUnitTestMethod(args,...)
         exec s:JavaUnit_Exec.JavaUnitEscapeCMD(cmd)
     else
         if filereadable('pom.xml')
-            let cmd='java -cp '
+            let cmd='java -cp "'
                         \.g:JavaUnit_tempdir
-                        \.':'
+                        \.s:Psep
                         \.getcwd()
-                        \.join(['','target','test-classes:'],s:sep)
+                        \.join(['','target','test-classes'],s:Fsep)
+                        \.s:Psep
                         \.g:JavaComplete_LibsPath
-                        \.' com.wsdjeg.util.TestMethod '
+                        \.'" com.wsdjeg.util.TestMethod '
                         \.currentClassName
                         \.' '
                         \.a:args
         else
-            let cmd='java -cp '
+            let cmd='java -cp "'
                         \.g:JavaUnit_tempdir
-                        \.':'
+                        \.s:Psep
                         \.g:JavaComplete_LibsPath
-                        \.' com.wsdjeg.util.TestMethod '
+                        \.'" com.wsdjeg.util.TestMethod '
                         \.currentClassName
                         \.' '
                         \.a:args
@@ -86,12 +90,13 @@ endfunction
 function JavaUnitTestAllMethods()
     let line = getline(search("package","nb",getline("0$")))
     let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
-    let cmd='java -cp '.g:JavaUnit_tempdir.':'.g:JavaComplete_LibsPath.' com.wsdjeg.util.TestMethod '.currentClassName
+    let cmd='java -cp "'.g:JavaUnit_tempdir.s:Psep.g:JavaComplete_LibsPath.'" com.wsdjeg.util.TestMethod '.currentClassName
     exec s:JavaUnit_Exec.JavaUnitEscapeCMD(cmd)
 endfunction
 
 function JavaUnitEscapeCMD(cmd)
     let s:cmd = substitute(a:cmd,' ','\\ ','g')
+    let s:cmd = substitute(s:cmd,'"','\\"','g')
     return substitute(s:cmd,':','\\:','g')
 endfunction
 
@@ -110,7 +115,7 @@ function JavaUnitNewClass(classNAME)
     let filePath = expand("%:h")
     let flag = 0
     let packageName = ''
-    for a in split(filePath,s:sep)
+    for a in split(filePath,s:Fsep)
         if flag
             if a == expand("%:h:t")
                 let packageName .= a.';'
