@@ -25,7 +25,7 @@ let s:JavaUnit_TestMethod_Source = g:JavaUnit_Home .s:Fsep .join(['src','com','w
 lockvar! s:JavaUnit_Exec s:JavaUnit_TestMethod_Source g:JavaUnit_tempdir
 
 if findfile(g:JavaUnit_tempdir.join(['','com','wsdjeg','util','TestMethod.class'],s:Fsep))==""
-    silent exec '!javac -d "'.g:JavaUnit_tempdir.'" "'.s:JavaUnit_TestMethod_Source .'"'
+    silent exec '!javac -encoding utf8 -d "'.g:JavaUnit_tempdir.'" "'.s:JavaUnit_TestMethod_Source .'"'
 endif
 
 function JaveUnitTestMethod(args,...)
