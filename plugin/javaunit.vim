@@ -44,7 +44,7 @@ function JaveUnitTestMethod(args,...)
                         \.getcwd()
                         \.join(['','target','test-classes'],s:Fsep)
                         \.s:Psep
-                        \.g:JavaComplete_LibsPath
+                        \.get(g:,'JavaComplete_LibsPath','.')
                         \.'" com.wsdjeg.util.TestMethod '
                         \.currentClassName
                         \.' '
@@ -53,7 +53,7 @@ function JaveUnitTestMethod(args,...)
             let cmd='java -cp "'
                         \.g:JavaUnit_tempdir
                         \.s:Psep
-                        \.g:JavaComplete_LibsPath
+                        \.get(g:,'JavaComplete_LibsPath','.')
                         \.'" com.wsdjeg.util.TestMethod '
                         \.currentClassName
                         \.' '
@@ -68,7 +68,7 @@ function JaveUnitTestMethod(args,...)
                         \.getcwd()
                         \.join(['','target','test-classes'],s:Fsep)
                         \.s:Psep
-                        \.g:JavaComplete_LibsPath
+                        \.get(g:,'JavaComplete_LibsPath','.')
                         \.'" com.wsdjeg.util.TestMethod '
                         \.currentClassName
                         \.' '
@@ -77,7 +77,7 @@ function JaveUnitTestMethod(args,...)
             let cmd='java -cp "'
                         \.g:JavaUnit_tempdir
                         \.s:Psep
-                        \.g:JavaComplete_LibsPath
+                        \.get(g:,'JavaComplete_LibsPath','.')
                         \.'" com.wsdjeg.util.TestMethod '
                         \.currentClassName
                         \.' '
