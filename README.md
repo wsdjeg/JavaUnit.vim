@@ -3,8 +3,13 @@
 requirement
 
 1. jdk
+
 2. [artur-shaik/javacomplete2](https://github.com/artur-shaik/vim-javacomplete2)
+
 3. [scrooloose/syntastic](https://github.com/scrooloose/syntastic)
+
+   also you can use my fork which provide gradle support, [wsdjeg/syntastic](https://github.com/wsdjeg/syntastic)
+
 4. [Shougo/unite.vim](https://github.com/Shougo/unite.vim)
 
 install
@@ -22,12 +27,6 @@ Plugin 'wsdjeg/JavaUnit.vim'
 ```
 
 - command
-
-`JavaUnitGetConnection userName password` just like `mysql -u userName -p password`
-
-`JavaUnitSQLUse databaseName` just like `use databaseName`
-
-`JavaUnitSQLDrop database databasaName`or`JavaUnitSQLDrop table tableName` delete database or table
 
 JavaUnitTest
 
