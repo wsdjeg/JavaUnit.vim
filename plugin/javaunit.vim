@@ -97,8 +97,9 @@ endfunction
 function JavaUnitEscapeCMD(cmd)
     let s:cmd = substitute(a:cmd,' ','\\ ','g')
     let s:cmd = substitute(s:cmd,'"','\\"','g')
-    "let s:cmd = substitute(s:cmd,'\','\\\','g')
+    let s:cmd = substitute(s:cmd,'\','\\\','g')
     let s:cmd = substitute(s:cmd,';','\\;','g')
+    let s:cmd = substitute(s:cmd, '\t', '\\t', 'g')
     return substitute(s:cmd,':','\\:','g')
 endfunction
 
