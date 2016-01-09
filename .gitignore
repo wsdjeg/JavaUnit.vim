@@ -1,2 +1,2 @@
 *.class
-libs/mysqlvim/target
+test/*.java
