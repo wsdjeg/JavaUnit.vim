@@ -18,11 +18,9 @@ else
     let g:JavaUnit_tempdir = g:JavaUnit_Home .s:Fsep .'bin'
 endif
 
-let s:JavaUnit_Exec = "Unite -log -wrap output/shellcmd:"
-
 let s:JavaUnit_TestMethod_Source = g:JavaUnit_Home .s:Fsep .join(['src','com','wsdjeg','util','TestMethod.java'],s:Fsep)
 
-lockvar! s:JavaUnit_Exec s:JavaUnit_TestMethod_Source g:JavaUnit_tempdir
+lockvar! s:JavaUnit_TestMethod_Source g:JavaUnit_tempdir
 
 if findfile(g:JavaUnit_tempdir.join(['','com','wsdjeg','util','TestMethod.class'],s:Fsep))==""
     silent exec '!javac -encoding utf8 -d "'.g:JavaUnit_tempdir.'" "'.s:JavaUnit_TestMethod_Source .'"'
@@ -59,7 +57,7 @@ function JaveUnitTestMethod(args,...)
                         \.' '
                         \.cwords
         endif
-        exec s:JavaUnit_Exec.JavaUnitEscapeCMD(cmd)
+        call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
     else
         if filereadable('pom.xml')
             let cmd='java -cp "'
@@ -83,7 +81,7 @@ function JaveUnitTestMethod(args,...)
                         \.' '
                         \.a:args
         endif
-        exec s:JavaUnit_Exec.JavaUnitEscapeCMD(cmd)
+        call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
     endif
 endfunction
 
@@ -91,7 +89,7 @@ function JavaUnitTestAllMethods()
     let line = getline(search("package","nb",getline("0$")))
     let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
     let cmd='java -cp "'.g:JavaUnit_tempdir.s:Psep.g:JavaComplete_LibsPath.'" com.wsdjeg.util.TestMethod '.currentClassName
-    exec s:JavaUnit_Exec.JavaUnitEscapeCMD(cmd)
+    call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
 endfunction
 
 function JavaUnitEscapeCMD(cmd)
@@ -106,11 +104,12 @@ function JavaUnitMavenTest()
     let line = getline(search("package","nb",getline("0$")))
     let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
     let cmd = 'mvn test -Dtest='.currentClassName.'|ag --nocolor "^[^[]"'
-    exec s:JavaUnit_Exec.JavaUnitEscapeCMD(cmd)
+    call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
 endfunction
 
 function JavaUnitMavenTestAll()
-    exec s:JavaUnit_Exec.JavaUnitEscapeCMD('mvn test|ag --nocolor "^[^[]"')
+    let cmd = 'mvn test|ag --nocolor "^[^[]"'
+    call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
 endfunction
 
 function JavaUnitNewClass(classNAME)
