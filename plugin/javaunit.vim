@@ -147,6 +147,9 @@ command! -nargs=*
             \ JavaUnitTest
             \ call JaveUnitTestMethod(<q-args>)
 command! -nargs=0
+            \ JavaUnitExec
+            \ call javaunit#TestMain()
+command! -nargs=0
             \ JavaUnitTestAll
             \ call JavaUnitTestAllMethods()
 command! -nargs=0
