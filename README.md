@@ -1,5 +1,7 @@
 ###JavaUnit.vim
 
+[![Stories in Ready](https://badge.waffle.io/wsdjeg/JavaUnit.vim.png?label=ready&title=Ready)](http://waffle.io/wsdjeg/JavaUnit.vim)
+
 requirement
 
 1. jdk
