@@ -13,6 +13,9 @@ requirement
 
 4. [Shougo/unite.vim](https://github.com/Shougo/unite.vim)
 
+5. [tagbar](https://github.com/majutsushi/tagbar)
+
+
 install
 
 - [neobundle.vim](https://github.com/Shougo/neobundle.vim)
