@@ -34,7 +34,7 @@ Plugin 'wsdjeg/JavaUnit.vim'
 
 JavaUnitTest
 
-test the method on the cursor
+test the current methond(no need put the cursor on the methodName)
 ![2015-11-16 23-40-05](https://cloud.githubusercontent.com/assets/13142418/11186276/e153459c-8cbb-11e5-9724-9589066176d0.png)
 
 JavaUnitTest [args ...]
