@@ -30,7 +30,7 @@ function! javaunit#Compile() abort
     silent exec '!javac -encoding utf8 -d "'.s:JavaUnit_tempdir.'" "'.s:JavaUnit_TestMethod_Source .'"'
 endfunction
 
-function javeunit#TestMethod(args,...)
+function javaunit#TestMethod(args,...)
     let line = getline(search("package","nb",getline("0$")))
     if line != ''
         let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
