@@ -2,11 +2,6 @@ package com.wsdjeg.util;
 
 import java.lang.reflect.Method;
 
-/**本类为java方法测试类,使用前需将需要测试的源文件编译成class文件,之后运行
- * java -cp [制定classpath,包括本测试类 以及源文件的] com.wsdjeg.util.TestMethod [待测试类全类名] [待测试方法名]
- *
- *
- */
 public class TestMethod{
     public static void main(String[] args) {
         if(args.length == 2){

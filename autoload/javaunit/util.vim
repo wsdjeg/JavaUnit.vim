@@ -5,6 +5,7 @@ if exists('g:javaunit_util_loaded')
 endif
 let g:javaunit_util_loaded = 1
 
+
 function! s:OSX()
     return has('macunix')
 endfunction
@@ -29,6 +30,15 @@ function! javaunit#util#Psep() abort
     else
         return ':'
     endif
+endfunction
+
+
+function JavaUnitEscapeCMD(cmd)
+    let s:cmd = substitute(a:cmd,' ','\\ ','g')
+    let s:cmd = substitute(s:cmd,'\','\\\','g')
+    let s:cmd = substitute(s:cmd,';','\\;','g')
+    let s:cmd = substitute(s:cmd, '\t', '\\t', 'g')
+    return substitute(s:cmd,':','\\:','g')
 endfunction
 
 let &cpo = s:save_cpo
