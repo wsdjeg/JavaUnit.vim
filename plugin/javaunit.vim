@@ -8,11 +8,11 @@ endif
 let g:JavaUnit_loaded = 1
 
 command! -nargs=*
-            \ JavaUnitTest
+            \ JavaUnitExec
             \ call javaunit#TestMethod(<q-args>)
 
 command! -nargs=0
-            \ JavaUnitExec
+            \ JavaUnitTestMain
             \ call javaunit#TestMain()
 
 command! -nargs=0
@@ -32,7 +32,7 @@ command! -nargs=? -complete=file
             \ call javaunit#NewTestClass(expand("%:t:r"))
 
 command! -nargs=0
-            \ JavaUnitCompile
+            \ JavaUnitServerCompile
             \ call javaunit#Compile()
 
 let &cpo = s:save_cpo
