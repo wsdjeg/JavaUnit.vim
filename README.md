@@ -1,6 +1,8 @@
 [![Stories in Ready](https://badge.waffle.io/wsdjeg/JavaUnit.vim.png?label=ready&title=Ready)](https://waffle.io/wsdjeg/JavaUnit.vim)
 ###JavaUnit.vim
 
+[![Join the chat at https://gitter.im/wsdjeg/JavaUnit.vim](https://badges.gitter.im/wsdjeg/JavaUnit.vim.svg)](https://gitter.im/wsdjeg/JavaUnit.vim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 requirement
 
 1. jdk
