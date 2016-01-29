@@ -1,9 +1,9 @@
-[![Stories in Ready](https://badge.waffle.io/wsdjeg/JavaUnit.vim.png?label=ready&title=Ready)](https://waffle.io/wsdjeg/JavaUnit.vim)
 ###JavaUnit.vim
 
+[![Stories in Ready](https://badge.waffle.io/wsdjeg/JavaUnit.vim.png?label=ready&title=Ready)](https://waffle.io/wsdjeg/JavaUnit.vim)
 [![Join the chat at https://gitter.im/wsdjeg/JavaUnit.vim](https://badges.gitter.im/wsdjeg/JavaUnit.vim.svg)](https://gitter.im/wsdjeg/JavaUnit.vim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-requirement
+#### requirement
 
 1. jdk
 
@@ -18,7 +18,7 @@ requirement
 5. [tagbar](https://github.com/majutsushi/tagbar)
 
 
-install
+#### install
 
 - [neobundle.vim](https://github.com/Shougo/neobundle.vim)
 
@@ -32,7 +32,7 @@ NeoBundle 'wsdjeg/JavaUnit.vim'
 Plugin 'wsdjeg/JavaUnit.vim'
 ```
 
-- command
+#### Command
 
 JavaUnitExec
 
