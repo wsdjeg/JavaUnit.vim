@@ -144,7 +144,7 @@ function! javaunit#Get_method_name() abort
     return name
 endfunction
 
-function! javaunit#TestMain() abort
+function! javaunit#TestMain(...) abort
     let line = getline(search("package","nb",getline("0$")))
     if line != ''
         let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
@@ -161,6 +161,8 @@ function! javaunit#TestMain() abort
                         \.get(g:,'JavaComplete_LibsPath','.')
                         \.'" '
                         \.currentClassName
+                        \.' '
+                        \.(len(a:000) > 0 ? join(a:000,' ') : '')
         else
             let cmd='java -cp "'
                         \.s:JavaUnit_tempdir
@@ -168,6 +170,8 @@ function! javaunit#TestMain() abort
                         \.get(g:,'JavaComplete_LibsPath','.')
                         \.'" '
                         \.currentClassName
+                        \.' '
+                        \.(len(a:000) > 0 ? join(a:000,' ') : '')
         endif
         call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
 endfunction
