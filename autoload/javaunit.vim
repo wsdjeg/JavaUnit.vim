@@ -22,13 +22,14 @@ let s:JavaUnit_TestMethod_Source =
             \.s:Fsep
             \.join(['src','com','wsdjeg','util','TestMethod.java'],s:Fsep)
 
+function! javaunit#Compile() abort
+    silent exec '!javac -encoding utf8 -d "'.s:JavaUnit_tempdir.'" "'.s:JavaUnit_TestMethod_Source .'"'
+endfunction
+
 if findfile(s:JavaUnit_tempdir.join(['','com','wsdjeg','util','TestMethod.class'],s:Fsep))==""
     call javaunit#Compile()
 endif
 
-function! javaunit#Compile() abort
-    silent exec '!javac -encoding utf8 -d "'.s:JavaUnit_tempdir.'" "'.s:JavaUnit_TestMethod_Source .'"'
-endfunction
 
 function javaunit#TestMethod(args,...)
     let line = getline(search("package","nb",getline("0$")))
