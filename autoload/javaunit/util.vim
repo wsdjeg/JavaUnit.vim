@@ -33,7 +33,11 @@ function! javaunit#util#Psep() abort
 endfunction
 
 function! javaunit#util#ExecCMD(cmd)
+    if s:WINDOWS()
+        echomsg system(a:cmd)
+    else
         call unite#start([['output/shellcmd', s:EscapeCMD(a:cmd)]], {'log': 1, 'wrap': 1})
+    endif
 endfunction
 
 function! s:EscapeCMD(cmd)
