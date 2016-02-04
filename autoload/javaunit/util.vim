@@ -32,15 +32,25 @@ function! javaunit#util#Psep() abort
     endif
 endfunction
 
+function! javaunit#util#ExecCMD(cmd)
+        call unite#start([['output/shellcmd', s:EscapeCMD(a:cmd)]], {'log': 1, 'wrap': 1})
+endfunction
 
-function! javaunit#util#EscapeCMD(cmd)
-    let s:cmd = substitute(a:cmd,' ',':','g')
+function! s:EscapeCMD(cmd)
     if s:WINDOWS()
-        let s:cmd = substitute(s:cmd,';','\\;','g')
+        let cmd = substitute(a:cmd,' ','\\ ','g')
+        let cmd = substitute(cmd,'\','\\\','g')
+        let cmd = substitute(cmd,';','\\;','g')
+        let cmd = substitute(cmd, '\t', '\\t', 'g')
+        let cmd = substitute(cmd,':','\\:','g')
+    else
+        let cmd = substitute(a:cmd,' ','\\ ','g')
+        let cmd = substitute(cmd,'\','\\\','g')
+        let cmd = substitute(cmd,';','\\;','g')
+        let cmd = substitute(cmd, '\t', '\\t', 'g')
+        let cmd = substitute(cmd,':','\\:','g')
     endif
-    let s:cmd = substitute(s:cmd,'\','\\\','g')
-    let s:cmd = substitute(s:cmd, '\t', '\\t', 'g')
-    return substitute(s:cmd,':','\\:','g')
+    return cmd
 endfunction
 
 let &cpo = s:save_cpo

@@ -62,8 +62,7 @@ function javaunit#TestMethod(args,...)
                         \.' '
                         \.cwords
         endif
-        let cmd = javaunit#util#EscapeCMD(cmd)
-        call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
+        call javaunit#util#ExecCMD(cmd)
     else
         if filereadable('pom.xml')
             let cmd='java -cp "'
@@ -87,7 +86,7 @@ function javaunit#TestMethod(args,...)
                         \.' '
                         \.a:args
         endif
-        call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
+        call javaunit#util#ExecCMD(cmd)
     endif
 endfunction
 
@@ -95,7 +94,7 @@ function javaunit#TestAllMethods()
     let line = getline(search("package","nb",getline("0$")))
     let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
     let cmd='java -cp "'.s:JavaUnit_tempdir.s:Psep.g:JavaComplete_LibsPath.'" com.wsdjeg.util.TestMethod '.currentClassName
-    call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
+    call javaunit#util#ExecCMD(cmd)
 endfunction
 
 
@@ -108,7 +107,7 @@ endfunction
 
 function javaunit#MavenTestAll()
     let cmd = 'mvn test|ag --nocolor "^[^[]"'
-    call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
+    call javaunit#util#ExecCMD(cmd)
 endfunction
 
 function javaunit#NewTestClass(classNAME)
@@ -153,29 +152,29 @@ function! javaunit#TestMain(...) abort
     else
         let currentClassName = expand("%:t:r")
     endif
-        if filereadable('pom.xml')
-            let cmd='java -cp "'
-                        \.s:JavaUnit_tempdir
-                        \.s:Psep
-                        \.getcwd()
-                        \.join(['','target','test-classes'],s:Fsep)
-                        \.s:Psep
-                        \.get(g:,'JavaComplete_LibsPath','.')
-                        \.'" '
-                        \.currentClassName
-                        \.' '
-                        \.(len(a:000) > 0 ? join(a:000,' ') : '')
-        else
-            let cmd='java -cp "'
-                        \.s:JavaUnit_tempdir
-                        \.s:Psep
-                        \.get(g:,'JavaComplete_LibsPath','.')
-                        \.'" '
-                        \.currentClassName
-                        \.' '
-                        \.(len(a:000) > 0 ? join(a:000,' ') : '')
-        endif
-        call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
+    if filereadable('pom.xml')
+        let cmd='java -cp "'
+                    \.s:JavaUnit_tempdir
+                    \.s:Psep
+                    \.getcwd()
+                    \.join(['','target','test-classes'],s:Fsep)
+                    \.s:Psep
+                    \.get(g:,'JavaComplete_LibsPath','.')
+                    \.'" '
+                    \.currentClassName
+                    \.' '
+                    \.(len(a:000) > 0 ? join(a:000,' ') : '')
+    else
+        let cmd='java -cp "'
+                    \.s:JavaUnit_tempdir
+                    \.s:Psep
+                    \.get(g:,'JavaComplete_LibsPath','.')
+                    \.'" '
+                    \.currentClassName
+                    \.' '
+                    \.(len(a:000) > 0 ? join(a:000,' ') : '')
+    endif
+    call javaunit#util#ExecCMD(cmd)
 endfunction
 let &cpo = s:save_cpo
 unlet s:save_cpo
