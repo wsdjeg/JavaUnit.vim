@@ -41,13 +41,8 @@ function! javaunit#util#ExecCMD(cmd)
 endfunction
 
 function! s:EscapeCMD(cmd)
+    let cmd = a:cmd
     if s:WINDOWS()
-        let cmd = substitute(a:cmd,' ','\\ ','g')
-        let cmd = substitute(cmd,'\','\\\','g')
-        let cmd = substitute(cmd,';','\\;','g')
-        let cmd = substitute(cmd, '\t', '\\t', 'g')
-        let cmd = substitute(cmd,':','\\:','g')
-    else
         let cmd = substitute(a:cmd,' ','\\ ','g')
         let cmd = substitute(cmd,'\','\\\','g')
         let cmd = substitute(cmd,';','\\;','g')
