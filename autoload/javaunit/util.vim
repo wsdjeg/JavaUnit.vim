@@ -33,10 +33,12 @@ function! javaunit#util#Psep() abort
 endfunction
 
 
-function JavaUnitEscapeCMD(cmd)
-    let s:cmd = substitute(a:cmd,' ','\\ ','g')
+function! javaunit#util#EscapeCMD(cmd)
+    let s:cmd = substitute(a:cmd,' ',':','g')
+    if s:WINDOWS()
+        let s:cmd = substitute(s:cmd,';','\\;','g')
+    endif
     let s:cmd = substitute(s:cmd,'\','\\\','g')
-    let s:cmd = substitute(s:cmd,';','\\;','g')
     let s:cmd = substitute(s:cmd, '\t', '\\t', 'g')
     return substitute(s:cmd,':','\\:','g')
 endfunction

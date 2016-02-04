@@ -62,6 +62,7 @@ function javaunit#TestMethod(args,...)
                         \.' '
                         \.cwords
         endif
+        let cmd = javaunit#util#EscapeCMD(cmd)
         call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
     else
         if filereadable('pom.xml')
