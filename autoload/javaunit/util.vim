@@ -37,7 +37,12 @@ function! javaunit#util#ExecCMD(cmd)
 endfunction
 
 function! s:EscapeCMD(cmd)
-    return a:cmd
+    if s:WINDOWS()
+        return a:cmd
+    else
+        " todo
+        return a:cmd
+    endif
 endfunction
 
 let &cpo = s:save_cpo
