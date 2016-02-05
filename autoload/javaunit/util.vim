@@ -33,23 +33,11 @@ function! javaunit#util#Psep() abort
 endfunction
 
 function! javaunit#util#ExecCMD(cmd)
-    if s:WINDOWS()
-        echomsg system(a:cmd)
-    else
-        call unite#start([['output/shellcmd', s:EscapeCMD(a:cmd)]], {'log': 1, 'wrap': 1})
-    endif
+    call unite#start([['output/shellcmd', s:EscapeCMD(a:cmd)]], {'log': 1, 'wrap': 1})
 endfunction
 
 function! s:EscapeCMD(cmd)
-    let cmd = a:cmd
-    if s:WINDOWS()
-        let cmd = substitute(a:cmd,' ','\\ ','g')
-        let cmd = substitute(cmd,'\','\\\','g')
-        let cmd = substitute(cmd,';','\\;','g')
-        let cmd = substitute(cmd, '\t', '\\t', 'g')
-        let cmd = substitute(cmd,':','\\:','g')
-    endif
-    return cmd
+    return a:cmd
 endfunction
 
 let &cpo = s:save_cpo

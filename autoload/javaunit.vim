@@ -41,23 +41,23 @@ function javaunit#TestMethod(args,...)
     if a:args == ""
         let cwords = split(airline#extensions#tagbar#currenttag(),'(')[0]
         if filereadable('pom.xml')
-            let cmd='java -cp "'
+            let cmd="java -cp '"
                         \.s:JavaUnit_tempdir
                         \.s:Psep
                         \.getcwd()
                         \.join(['','target','test-classes'],s:Fsep)
                         \.s:Psep
                         \.get(g:,'JavaComplete_LibsPath','.')
-                        \.'" com.wsdjeg.util.TestMethod '
+                        \."' com.wsdjeg.util.TestMethod "
                         \.currentClassName
                         \.' '
                         \.cwords
         else
-            let cmd='java -cp "'
+            let cmd="java -cp '"
                         \.s:JavaUnit_tempdir
                         \.s:Psep
                         \.get(g:,'JavaComplete_LibsPath','.')
-                        \.'" com.wsdjeg.util.TestMethod '
+                        \."' com.wsdjeg.util.TestMethod "
                         \.currentClassName
                         \.' '
                         \.cwords
@@ -65,23 +65,23 @@ function javaunit#TestMethod(args,...)
         call javaunit#util#ExecCMD(cmd)
     else
         if filereadable('pom.xml')
-            let cmd='java -cp "'
+            let cmd="java -cp '"
                         \.s:JavaUnit_tempdir
                         \.s:Psep
                         \.getcwd()
                         \.join(['','target','test-classes'],s:Fsep)
                         \.s:Psep
                         \.get(g:,'JavaComplete_LibsPath','.')
-                        \.'" com.wsdjeg.util.TestMethod '
+                        \."' com.wsdjeg.util.TestMethod "
                         \.currentClassName
                         \.' '
                         \.a:args
         else
-            let cmd='java -cp "'
+            let cmd="java -cp '"
                         \.s:JavaUnit_tempdir
                         \.s:Psep
                         \.get(g:,'JavaComplete_LibsPath','.')
-                        \.'" com.wsdjeg.util.TestMethod '
+                        \."' com.wsdjeg.util.TestMethod "
                         \.currentClassName
                         \.' '
                         \.a:args
@@ -93,7 +93,7 @@ endfunction
 function javaunit#TestAllMethods()
     let line = getline(search("package","nb",getline("0$")))
     let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
-    let cmd='java -cp "'.s:JavaUnit_tempdir.s:Psep.g:JavaComplete_LibsPath.'" com.wsdjeg.util.TestMethod '.currentClassName
+    let cmd="java -cp '" . s:JavaUnit_tempdir.s:Psep.g:JavaComplete_LibsPath . "' com.wsdjeg.util.TestMethod " . currentClassName
     call javaunit#util#ExecCMD(cmd)
 endfunction
 
@@ -153,23 +153,23 @@ function! javaunit#TestMain(...) abort
         let currentClassName = expand("%:t:r")
     endif
     if filereadable('pom.xml')
-        let cmd='java -cp "'
+        let cmd="java -cp '"
                     \.s:JavaUnit_tempdir
                     \.s:Psep
                     \.getcwd()
                     \.join(['','target','test-classes'],s:Fsep)
                     \.s:Psep
                     \.get(g:,'JavaComplete_LibsPath','.')
-                    \.'" '
+                    \."' "
                     \.currentClassName
                     \.' '
                     \.(len(a:000) > 0 ? join(a:000,' ') : '')
     else
-        let cmd='java -cp "'
+        let cmd="java -cp '"
                     \.s:JavaUnit_tempdir
                     \.s:Psep
                     \.get(g:,'JavaComplete_LibsPath','.')
-                    \.'" '
+                    \."' "
                     \.currentClassName
                     \.' '
                     \.(len(a:000) > 0 ? join(a:000,' ') : '')
