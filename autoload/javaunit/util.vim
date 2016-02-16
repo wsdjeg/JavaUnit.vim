@@ -33,7 +33,7 @@ function! javaunit#util#Psep() abort
 endfunction
 
 function! javaunit#util#ExecCMD(cmd)
-    call unite#start([['output/shellcmd', s:EscapeCMD(a:cmd)]], {'log': 1, 'wrap': 1})
+    call unite#start([['output/shellcmd', s:EscapeCMD(a:cmd)]], {'log': 1, 'wrap': 1,'start_insert':0})
 endfunction
 
 function! s:EscapeCMD(cmd)
