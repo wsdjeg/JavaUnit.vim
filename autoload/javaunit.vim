@@ -20,7 +20,7 @@ endif
 let s:JavaUnit_TestMethod_Source =
             \g:JavaUnit_Home
             \.s:Fsep
-            \.join(['src','com','wsdjeg','util','TestMethod.java'],s:Fsep)
+            \.join(['src' , 'com' , 'wsdjeg' , 'util' , '*.java'],s:Fsep)
 
 function! javaunit#Compile() abort
     silent exec '!javac -encoding utf8 -d "'.s:JavaUnit_tempdir.'" "'.s:JavaUnit_TestMethod_Source .'"'
@@ -176,5 +176,34 @@ function! javaunit#TestMain(...) abort
     endif
     call javaunit#util#ExecCMD(cmd)
 endfunction
+
+fu! javaunit#GenerateTestMethods()
+    let testClassName = expand('%:t:r')
+    if stridx(testClassName, 'test') != -1  || stridx(testClassName, 'Test') != -1
+        let line = getline(search("package","nb",getline("0$")))
+        let testClassName = split(split(line," ")[1],";")[0]."." . testClassName
+        if stridx(testClassName, 'Test') == len(testClassName) - 4
+            let className = strpart(testClassName, 0,len(testClassName) - 4)
+            echomsg testClassName
+            echomsg className
+            let cmd="java -cp '"
+                        \.s:JavaUnit_tempdir
+                        \.s:Psep
+                        \.getcwd()
+                        \.join(['','target','test-classes'],s:Fsep)
+                        \.s:Psep
+                        \.get(g:,'JavaComplete_LibsPath','.')
+                        \."' com.wsdjeg.util.GenerateMethod "
+                        \.className
+            echomsg system(cmd)
+        else
+            echohl WarningMsg | echomsg "This is not a testClassName,now only support className end with 'Test'" | echohl None
+        endif
+    else
+        echohl WarningMsg | echomsg "This is not a testClassName" | echohl None
+    endif
+endf
+
+
 let &cpo = s:save_cpo
 unlet s:save_cpo

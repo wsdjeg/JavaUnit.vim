@@ -35,5 +35,9 @@ command! -nargs=0
             \ JavaUnitServerCompile
             \ call javaunit#Compile()
 
+command! -nargs=0
+            \ JUGenerateM
+            \ call javaunit#GenerateTestMethods()
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
