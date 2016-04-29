@@ -195,7 +195,8 @@ fu! javaunit#GenerateTestMethods()
                         \.get(g:,'JavaComplete_LibsPath','.')
                         \."' com.wsdjeg.util.GenerateMethod "
                         \.className
-            let methods =  split(system(cmd),'|')
+            let methods =  split(split(system(cmd),'^@')[0],'|')
+            let curPos = getpos('.')
             let classdefineline = search("class " . expand('%:t:r'),"nb",getline("0$"))
             for m in methods
                 call append(classdefineline, "/* test " . m . " */")
@@ -203,6 +204,8 @@ fu! javaunit#GenerateTestMethods()
                 call append(classdefineline + 2,"//TODO")
                 call append(classdefineline + 3,"}")
             endfor
+            call feedkeys("gg=G","n")
+            call cursor(curPos[1] + 1, curPos[2])
         else
             echohl WarningMsg | echomsg "This is not a testClassName,now only support className end with 'Test'" | echohl None
         endif
