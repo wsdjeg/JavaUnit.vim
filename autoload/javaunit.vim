@@ -195,7 +195,7 @@ fu! javaunit#GenerateTestMethods()
                         \.get(g:,'JavaComplete_LibsPath','.')
                         \."' com.wsdjeg.util.GenerateMethod "
                         \.className
-            let methods =  split(split(system(cmd),'^@')[0],'|')
+            let methods =  split(join(systemlist(cmd)),'|')
             let curPos = getpos('.')
             let classdefineline = search("class " . expand('%:t:r'),"nb",getline("0$"))
             for m in methods
