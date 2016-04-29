@@ -184,8 +184,6 @@ fu! javaunit#GenerateTestMethods()
         let testClassName = split(split(line," ")[1],";")[0]."." . testClassName
         if stridx(testClassName, 'Test') == len(testClassName) - 4
             let className = strpart(testClassName, 0,len(testClassName) - 4)
-            echomsg testClassName
-            echomsg className
             let cmd="java -cp '"
                         \.s:JavaUnit_tempdir
                         \.s:Psep
