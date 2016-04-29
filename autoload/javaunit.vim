@@ -23,7 +23,7 @@ let s:JavaUnit_TestMethod_Source =
             \.join(['src' , 'com' , 'wsdjeg' , 'util' , '*.java'],s:Fsep)
 
 function! javaunit#Compile() abort
-    silent exec '!javac -encoding utf8 -d "'.s:JavaUnit_tempdir.'" "'.s:JavaUnit_TestMethod_Source .'"'
+    silent exec '!javac -encoding utf8 -d '.s:JavaUnit_tempdir.' '.s:JavaUnit_TestMethod_Source 
 endfunction
 
 if findfile(s:JavaUnit_tempdir.join(['','com','wsdjeg','util','TestMethod.class'],s:Fsep))==""
