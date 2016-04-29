@@ -195,7 +195,14 @@ fu! javaunit#GenerateTestMethods()
                         \.get(g:,'JavaComplete_LibsPath','.')
                         \."' com.wsdjeg.util.GenerateMethod "
                         \.className
-            echomsg system(cmd)
+            let methods =  split(system(cmd),'|')
+            let classdefineline = search("class " . expand('%:t:r'),"nb",getline("0$"))
+            for m in methods
+                call append(classdefineline, "/* test " . m . " */")
+                call append(classdefineline + 1,"public void test" . toupper(strpart(m,0,1)) . strpart(m,1,len(m)) . "() {")
+                call append(classdefineline + 2,"//TODO")
+                call append(classdefineline + 3,"}")
+            endfor
         else
             echohl WarningMsg | echomsg "This is not a testClassName,now only support className end with 'Test'" | echohl None
         endif

@@ -17,7 +17,7 @@ public class GenerateMethod {
         String result = "";
         for (int i = 0; i < mds.length; i++) {
             if (result.length()>0) {
-                result = result + "|" +mds[0].getName();
+                result = result + "|" +mds[i].getName();
             }else{
                 result = mds[0].getName();
             }
