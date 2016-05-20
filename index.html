@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Javaunit.vim by wsdjeg</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Javaunit.vim</h1>
+        <h2>Java Unit Test in VIM</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/wsdjeg/JavaUnit.vim/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/wsdjeg/JavaUnit.vim/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/wsdjeg/JavaUnit.vim" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>
+<a id="javaunitvim" class="anchor" href="#javaunitvim" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JavaUnit.vim</h3>
+
+<p><a href="https://waffle.io/wsdjeg/JavaUnit.vim"><img src="https://badge.waffle.io/wsdjeg/JavaUnit.vim.png?label=ready&amp;title=Ready" alt="Stories in Ready"></a>
+<a href="https://gitter.im/wsdjeg/JavaUnit.vim?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/wsdjeg/JavaUnit.vim.svg" alt="Join the chat at https://gitter.im/wsdjeg/JavaUnit.vim"></a></p>
+
+<h4>
+<a id="requirement" class="anchor" href="#requirement" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>requirement</h4>
+
+<ol>
+<li><p>jdk</p></li>
+<li><p><a href="https://github.com/artur-shaik/vim-javacomplete2">artur-shaik/javacomplete2</a></p></li>
+<li>
+<p><a href="https://github.com/scrooloose/syntastic">scrooloose/syntastic</a></p>
+
+<p>also you can use my fork which provide gradle support, <a href="https://github.com/wsdjeg/syntastic">wsdjeg/syntastic</a></p>
+</li>
+<li><p><a href="https://github.com/Shougo/unite.vim">Shougo/unite.vim</a></p></li>
+<li><p><a href="https://github.com/majutsushi/tagbar">tagbar</a></p></li>
+</ol>
+
+<h4>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>install</h4>
+
+<ul>
+<li><a href="https://github.com/Shougo/neobundle.vim">neobundle.vim</a></li>
+</ul>
+
+<div class="highlight highlight-source-viml"><pre>NeoBundle <span class="pl-s">'wsdjeg/JavaUnit.vim'</span></pre></div>
+
+<ul>
+<li><a href="https://github.com/VundleVim/Vundle.vim">Vundle.vim</a></li>
+</ul>
+
+<div class="highlight highlight-source-viml"><pre>Plugin <span class="pl-s">'wsdjeg/JavaUnit.vim'</span></pre></div>
+
+<h4>
+<a id="command" class="anchor" href="#command" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Command</h4>
+
+<p>JavaUnitExec</p>
+
+<p>test the current methond(no need put the cursor on the methodName)
+<img src="https://cloud.githubusercontent.com/assets/13142418/11186276/e153459c-8cbb-11e5-9724-9589066176d0.png" alt="2015-11-16 23-40-05"></p>
+
+<p>JavaUnitExec [args ...]</p>
+
+<p>test specification method</p>
+
+<p>example JavaUnitExec testMethod1 testMethod2 testMethod3 ...
+<img src="https://cloud.githubusercontent.com/assets/13142418/11186274/e1520d9e-8cbb-11e5-90e1-17e6cfbc5a09.png" alt="2015-11-16 23-40-25"></p>
+
+<p>JavaUnitTestMain</p>
+
+<p>run the main methon of current class</p>
+
+<p>also you can use <code>JavaUnitTestAll</code>,then will run all the testMethod in the current file
+<img src="https://cloud.githubusercontent.com/assets/13142418/11186273/e132f580-8cbb-11e5-94d3-81dfda614abf.png" alt="2015-11-16 23-40-43"></p>
+
+<p>support for maven project</p>
+
+<p>JavaUnitTestMaven test current file</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/13142418/11186066/ef8f70aa-8cba-11e5-9869-13f39a782ad7.png" alt="JavaUnitMavenTest"></p>
+
+<p>JavaUnitTestMavenAll test this project</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/13142418/11186033/baf6f64c-8cba-11e5-989c-cd3dacb038b3.png" alt="JavaUnitMavenTestAll"></p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
