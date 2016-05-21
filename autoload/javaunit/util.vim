@@ -33,14 +33,17 @@ function! javaunit#util#Psep() abort
 endfunction
 
 function! javaunit#util#ExecCMD(cmd)
-    call unite#start([['output/shellcmd', s:EscapeCMD(a:cmd)]], {'log': 1, 'wrap': 1,'start_insert':0})
+    if exists(':Unite')
+        call unite#start([['output/shellcmd', s:EscapeCMD(a:cmd)]], {'log': 1, 'wrap': 1,'start_insert':0})
+    else
+        call javaunit#win#OpenWin(a:cmd)
+    endif
 endfunction
 
 function! s:EscapeCMD(cmd)
     if s:WINDOWS()
         return a:cmd
     else
-        " todo
         return a:cmd
     endif
 endfunction
