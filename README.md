@@ -11,9 +11,11 @@
 
 3. [scrooloose/syntastic](https://github.com/scrooloose/syntastic)
 
-   also you can use my fork which provide gradle support, [wsdjeg/syntastic](https://github.com/wsdjeg/syntastic)
+> also you can use my fork which provide gradle support, [wsdjeg/syntastic](https://github.com/wsdjeg/syntastic)
 
 4. [Shougo/unite.vim](https://github.com/Shougo/unite.vim)
+
+> if you do not intstall this plugin,JavaUnit will show result in its own buffer instead of unite.
 
 5. [tagbar](https://github.com/majutsushi/tagbar)
 
@@ -63,3 +65,6 @@ JavaUnitTestMavenAll test this project
 
 ![JavaUnitMavenTestAll](https://cloud.githubusercontent.com/assets/13142418/11186033/baf6f64c-8cba-11e5-989c-cd3dacb038b3.png)
 
+#### Mappings
+
+`q` close the JavaUnit buffer.
