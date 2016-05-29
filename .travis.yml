@@ -32,5 +32,5 @@ script:
     elif [ "$LINT" = "vint" ]; then
       vint .
     elif [ "$LINT" = "vint-errors" ]; then
-      vint  .
+      vint --error .
     fi

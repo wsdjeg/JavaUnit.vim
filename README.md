@@ -1,7 +1,7 @@
 ###JavaUnit.vim
 
-[![Stories in Ready](https://badge.waffle.io/wsdjeg/JavaUnit.vim.png?label=ready&title=Ready)](https://waffle.io/wsdjeg/JavaUnit.vim)
 [![Join the chat at https://gitter.im/wsdjeg/JavaUnit.vim](https://badges.gitter.im/wsdjeg/JavaUnit.vim.svg)](https://gitter.im/wsdjeg/JavaUnit.vim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/wsdjeg/JavaUnit.vim.svg?branch=master)](https://travis-ci.org/wsdjeg/JavaUnit.vim)
 
 #### requirement
 
