@@ -1,5 +1,6 @@
 package com.wsdjeg.util;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 public class TestMethod{
@@ -37,7 +38,9 @@ public class TestMethod{
             System.out.println("startting : className:" + className + " methodName :"+ methodName + "()" );
             System.out.println("result:");
             Class<?> clazz = Class.forName(className);
-            clazz.getMethod(methodName).invoke(clazz.newInstance());
+            Constructor<?> c = clazz.getDeclaredConstructor();
+            c.setAccessible(true);
+            clazz.getMethod(methodName).invoke(c.newInstance());
             System.out.println("success!");
         }catch(Exception e){
             System.out.println("fail!");
