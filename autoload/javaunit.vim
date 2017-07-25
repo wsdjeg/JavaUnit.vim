@@ -39,7 +39,7 @@ function javaunit#TestMethod(args,...)
         let currentClassName = expand("%:t:r")
     endif
     if a:args == ""
-        let cwords = split(airline#extensions#tagbar#currenttag(),'(')[0]
+        let cwords = split(tagbar#currenttag('%s', '', ''),'(')[0]
         if filereadable('pom.xml')
             let cmd="java -cp '"
                         \.s:JavaUnit_tempdir
