@@ -35,15 +35,16 @@ public class TestMethod{
     @SuppressWarnings("unchecked")
     public static void testSpecifiedMethod(String className,String methodName){
         try{
+            System.out.println("======================================================================");
             System.out.println("startting : className:" + className + " methodName :"+ methodName + "()" );
-            System.out.println("result:");
+            System.out.println("============================= OUTPUT =================================");
             Class<?> clazz = Class.forName(className);
             Constructor<?> c = clazz.getDeclaredConstructor();
             c.setAccessible(true);
             clazz.getMethod(methodName).invoke(c.newInstance());
-            System.out.println("success!");
+            System.out.println("============================= SUCCESS ================================");
         }catch(Exception e){
-            System.out.println("fail!");
+            System.out.println("============================= FAILED ================================");
             e.printStackTrace();
         }
     }
