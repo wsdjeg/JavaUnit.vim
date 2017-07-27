@@ -35,14 +35,17 @@ public class TestMethod{
     @SuppressWarnings("unchecked")
     public static void testSpecifiedMethod(String className,String methodName){
         try{
-            System.out.println("======================================================================");
-            System.out.println("startting : className:" + className + " methodName :"+ methodName + "()" );
+            System.out.println("========================= JavaUnite Test =============================");
+            System.out.println("CLASS:" + className);
+            System.out.println("METHOD:" + methodName + "()");
             System.out.println("============================= OUTPUT =================================");
             Class<?> clazz = Class.forName(className);
             Constructor<?> c = clazz.getDeclaredConstructor();
             c.setAccessible(true);
+            long startTime = System.currentTimeMillis();
             clazz.getMethod(methodName).invoke(c.newInstance());
-            System.out.println("============================= SUCCESS ================================");
+            long endTime = System.currentTimeMillis();
+            System.out.println("================ SUCCESS: " + (endTime - startTime) + "ms ======================");
         }catch(Exception e){
             System.out.println("============================= FAILED ================================");
             e.printStackTrace();
