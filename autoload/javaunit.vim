@@ -101,12 +101,12 @@ endfunction
 function javaunit#MavenTest()
     let line = getline(search("package","nb",getline("0$")))
     let currentClassName = split(split(line," ")[1],";")[0].".".expand("%:t:r")
-    let cmd = 'mvn test -Dtest='.currentClassName.'|ag --nocolor "^[^[]"'
-    call unite#start([['output/shellcmd', cmd]], {'log': 1, 'wrap': 1})
+    let cmd = 'mvn test -Dtest='.currentClassName
+    call javaunit#util#ExecCMD(cmd)
 endfunction
 
 function javaunit#MavenTestAll()
-    let cmd = 'mvn test|ag --nocolor "^[^[]"'
+    let cmd = 'mvn test'
     call javaunit#util#ExecCMD(cmd)
 endfunction
 
@@ -165,11 +165,10 @@ function! javaunit#TestMain(...) abort
                     \.' '
                     \.(len(a:000) > 0 ? join(a:000,' ') : '')
     else
-        let cmd="java -cp '"
+        let cmd='java -cp "' . get(g:,'JavaComplete_LibsPath','.') . s:Psep
                     \.s:JavaUnit_tempdir
                     \.s:Psep
-                    \.get(g:,'JavaComplete_LibsPath','.')
-                    \."' "
+                    \.'" '
                     \.currentClassName
                     \.' '
                     \.(len(a:000) > 0 ? join(a:000,' ') : '')
